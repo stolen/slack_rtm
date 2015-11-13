@@ -1,0 +1,15 @@
+{application, slack_rtm, [
+	{description, "Slack Realtime Messaging client"},
+	{vsn, "0.1.0"},
+	{id, "git"},
+	{modules, []},
+    {mod, {slack_rtm_sup, []}},
+	{registered, [slack_rtm_sup]},
+	{applications, [
+		kernel,
+		stdlib,
+        ibrowse,
+        websocket_client,
+        jsx
+	]}
+]}.
