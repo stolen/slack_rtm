@@ -14,7 +14,11 @@ stop(_) ->
 
 
 init(root) ->
-    {ok, {{one_for_one, 10, 1}, []}}.
+    Bots = case application:get_env(slack_rtm, token) of
+        {ok, Token} -> [bot_spec(Token)];
+        undefined -> []
+    end,
+    {ok, {{one_for_one, 10, 1}, Bots}}.
 
 
 add_bot(Token) ->
@@ -22,4 +26,4 @@ add_bot(Token) ->
     supervisor:start_child(?MODULE, bot_spec(NormToken)).
 
 bot_spec(Token) ->
-    #{id => Token, start => {slack_rtm, start_link, [Token]}}.
+    #{id => Token, start => {slack_rtm, start_link_bot, [Token]}}.

@@ -1,6 +1,6 @@
 PROJECT = slack_rtm
 
-SHELL_OPTS = +pc unicode -s tddreloader -s slack_rtm
+SHELL_OPTS = +pc unicode -s tddreloader -s slack_rtm -slack_rtm token '"$(TOKEN)"'
 
 DEPS = ibrowse websocket_client jsx
 SHELL_DEPS = tddreloader

@@ -1,7 +1,7 @@
 -module(slack_rtm).
 
 -export([start/0]).
--export([start_link/1]).
+-export([start_link/1, start_link_bot/1]).
 
 -behaviour(websocket_client_handler).
 -export([init/2, websocket_handle/3, websocket_info/3, websocket_terminate/3]).
@@ -14,6 +14,9 @@ start() ->
 
 start_link(Token) ->
     start(),
+    start_link_bot(Token).
+
+start_link_bot(Token) ->
     StartUrl = "https://slack.com/api/rtm.start?simple_latest=true&no_unreads=true&token=" ++ Token,
     {ok, "200", _, OpenResp} = ibrowse:send_req(StartUrl, [], post, <<>>, [{response_format, binary}]),
     OpenInfo = jsx:decode(OpenResp, [return_maps]),
