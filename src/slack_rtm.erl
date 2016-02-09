@@ -266,7 +266,7 @@ handle_command(Channel, User, <<"config ", ConfigKV/binary>>, #{} = Slack) ->
     end;
 
 handle_command(Channel, User, Cmd, Slack) ->
-    {reply, message(Channel, user_login(User, Slack), <<"Unknown command: ", Cmd/binary>>), Slack}.
+    {reply, message(Channel, User, <<"Unknown command: ", Cmd/binary>>), Slack}.
 
 parse_apply_config(ConfText, #{} = Slack) ->
     [_Header | ConfigLines] = binary:split(ConfText, <<"\n">>, [global]),
@@ -425,7 +425,7 @@ remove_conf_reaction(Channel, Timestamp, Token) ->
 
 
 check_trigger(Topic, Trigger) ->
-    case re:run(Topic, <<"^(.* )?", Trigger/binary, "( .*)? @([^ ]*)( .*)?$">>, [unicode, {capture, [3], binary}]) of
+    case re:run(Topic, <<"^(.* )?", Trigger/binary, "(.*)? @([^ ]*)( .*)?$">>, [unicode, {capture, [3], binary}]) of
         {match, [Nickname]} ->
             {ok, Nickname};
         nomatch ->
